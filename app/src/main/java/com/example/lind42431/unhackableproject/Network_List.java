@@ -48,7 +48,6 @@ public class Network_List extends AppCompatActivity {
     String mainCAP;
     String mainSSID;
     String mainBSSID;
-    SQLiteDatabase checkdb;
     SQLiteDatabase netDataBase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,17 +131,8 @@ public class Network_List extends AppCompatActivity {
 
     private void checkDBExist(){
         //Catches the SQLiteCantOpenDatabaseException when opening the database throws and exception
-        try {
-            checkdb = SQLiteDatabase.openDatabase("savedNetDB", null, SQLiteDatabase.OPEN_READONLY);
 
-
-
-        }catch(SQLiteCantOpenDatabaseException e){
-            //Create the database when caught
-            netDataBase = openOrCreateDatabase("savedNetDB", MODE_PRIVATE,null);
-            netDataBase.execSQL("CREATE TABLE IF NOT EXISTS netData(SSID VARCHAR, BSSID VARCHAR, CAPABILITIES VARCHAR);");
-
-        }
+        netDataBase = openOrCreateDatabase("netBase", MODE_PRIVATE, null);
 
     }
     // Wifi Scan receiver
