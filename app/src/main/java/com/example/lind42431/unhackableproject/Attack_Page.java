@@ -1,6 +1,7 @@
 package com.example.lind42431.unhackableproject;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.database.sqlite.*;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 /**
  * Created by teamWeeV on 11/3/2016.
- * Version: 0.5
+ * Version: 0.62
  */
 
 public class Attack_Page extends Network_List {
@@ -26,9 +27,12 @@ public class Attack_Page extends Network_List {
         TextView CAPview = (TextView) findViewById(R.id.CAPView);
         Button backButton = (Button) findViewById(R.id.backbutton);
 
-        SSIDview.setText(mainSSID);
-        BSSIDview.setText(mainBSSID);
-        CAPview.setText(mainCAP);
+        Cursor SSIDselect = netDataBase.rawQuery("SELECT SSID from netDataTable", null);
+        if(SSIDselect.toString().equals(mainSSID)){
+
+            SSIDview.setText(SSIDselect.toString());
+
+        }
 
         backButton.setOnClickListener(new View.OnClickListener(){
 
