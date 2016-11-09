@@ -1,10 +1,11 @@
 package com.example.lind42431.unhackableproject;
 /**
- * Version 0.5
+ * Version 0.55
  * TeamWeeV
  * Network scanner and analyzer
  */
 
+import android.content.ContentValues;
 import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -22,15 +23,14 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import android.database.sqlite.*;
 
 import android.net.wifi.ScanResult;
-import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
-import android.net.wifi.WifiConfiguration;
-import android.net.NetworkInfo;
+
 
 import android.widget.Toast;
 
@@ -53,8 +53,12 @@ public class Network_List extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network__list);
-
-
+        final Toast noSU = Toast.makeText(getApplicationContext(), "Did not get root access!", Toast.LENGTH_SHORT);
+        try {
+            Process p = Runtime.getRuntime().exec("su");
+        }catch(IOException e){
+            noSU.show();
+        }
 
 
         //final EditText searchNet = (EditText) findViewById(R.id.networkEditText);
@@ -64,7 +68,7 @@ public class Network_List extends AppCompatActivity {
         checkDBExist();
         Button networkButton = (Button) findViewById(R.id.searchButton);
         Button selectButton = (Button) findViewById(R.id.buttonSelect);
-        Button scanButton = (Button) findViewById(R.id.buttonScan);
+        Button scanButton = (Button) findViewById(R.id.buttonScan);//Scan Button
 
         wifiM = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         wifiI = wifiM.getConnectionInfo();
@@ -74,7 +78,7 @@ public class Network_List extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                wifiM.startScan();
+                wifiM.startScan(); // Starts scan when they tap the SCAN button
 
             }
 
@@ -99,15 +103,13 @@ public class Network_List extends AppCompatActivity {
                 mainSSID = grabItemInfo.substring(0,(grabItemInfo.indexOf('#')));
                 mainCAP = grabItemInfo.substring(grabItemInfo.lastIndexOf('#')+1, grabItemInfo.length());
 
-                //// TODO: 11/3/2016 Fix SQL 
-                netDataBase.execSQL("DECLARE @mainSSID BLOB(50); "+
-                        "DECLARE @mainBSSID BLOB(17); " +
-                        "DECLARE @mainCAP BLOB(50); " +
-                        "SET @mainSSID = '"+mainSSID+"'; " +
-                        "SET @mainBSSID = '"+mainBSSID+"'; " +
-                        "SET @mainCAP = '"+mainCAP+"'; ");
+                ContentValues dbv = new ContentValues();
+                dbv.put("SSID", mainSSID);
+                dbv.put("BSSID", mainBSSID);
+                dbv.put("CAPABILITIES", mainCAP);
 
-                netDataBase.execSQL("INSERT INTO netData(SSID, BSSID, CAPABILITIES) VALUES(@mainSSID, @mainBSSID, @mainCAP)");
+
+                netDataBase.insert("netDataTable", "NULL", dbv);
                 Intent intent = new Intent(getApplicationContext(), Attack_Page.class);
                 startActivity(intent);
 
@@ -130,9 +132,10 @@ public class Network_List extends AppCompatActivity {
     }
 
     private void checkDBExist(){
-        //Catches the SQLiteCantOpenDatabaseException when opening the database throws and exception
+        // Opens the database if it is created and creates if it does not
 
         netDataBase = openOrCreateDatabase("netBase", MODE_PRIVATE, null);
+        netDataBase.execSQL("CREATE TABLE IF NOT EXISTS netDataTable(SSID BLOB, BSSID BLOB, CAPABILITIES BLOB);");
 
     }
     // Wifi Scan receiver
@@ -145,7 +148,7 @@ public class Network_List extends AppCompatActivity {
             wifis = new String[wifiSList.size()];
             //Loop to grab information for every received network point
             for (int x = 0; x<wifiSList.size(); x++){
-                //Get SSID BSSID capabilites when
+                //Get SSID BSSID capabilites
                 wifis[x] = ((wifiSList.get(x).SSID)+"#"+wifiSList.get(x).BSSID)+"#"+wifiSList.get(x).capabilities;
 
             }
