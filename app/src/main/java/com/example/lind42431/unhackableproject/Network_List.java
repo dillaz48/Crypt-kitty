@@ -1,13 +1,16 @@
 package com.example.lind42431.unhackableproject;
 /**
- * Version 0.6
+ * Version 0.62
  * TeamWeeV
  * Network scanner and analyzer
  */
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.wifi.WifiInfo;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +28,7 @@ import android.content.Intent;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.jar.Manifest;
 
 import android.database.sqlite.*;
 
@@ -43,6 +47,7 @@ public class Network_List extends AppCompatActivity {
     WifiInfo wifiI;
     ListView networklist;
     String wifis[];
+    String netid;
     //String searchNetwork;
     //String ssid;
     String mainCAP;
@@ -53,6 +58,7 @@ public class Network_List extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network__list);
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         final Toast noSU = Toast.makeText(getApplicationContext(), "Did not get root access!", Toast.LENGTH_SHORT);
         try {
             Process p = Runtime.getRuntime().exec("su");
@@ -104,12 +110,18 @@ public class Network_List extends AppCompatActivity {
                 mainCAP = grabItemInfo.substring(grabItemInfo.lastIndexOf('#')+1, grabItemInfo.length());
 
                 ContentValues dbv = new ContentValues();
+
                 dbv.put("SSID", mainSSID);
                 dbv.put("BSSID", mainBSSID);
                 dbv.put("CAPABILITIES", mainCAP);
 
 
                 netDataBase.insert("netDataTable", "NULL", dbv);
+
+
+
+
+
                 Intent intent = new Intent(getApplicationContext(), Attack_Page.class);
                 startActivity(intent);
 
@@ -134,8 +146,9 @@ public class Network_List extends AppCompatActivity {
     private void checkDBExist(){
         // Opens the database if it is created and creates if it does not
 
-        netDataBase = openOrCreateDatabase("netBase", MODE_PRIVATE, null);
-        netDataBase.execSQL("CREATE TABLE IF NOT EXISTS netDataTable(SSID BLOB, BSSID BLOB, CAPABILITIES BLOB);");
+        netDataBase = openOrCreateDatabase("networkBase", MODE_PRIVATE, null);
+
+        netDataBase.execSQL("CREATE TABLE IF NOT EXISTS netDataTable(NetID int NOT NULL, SSID BLOB, BSSID BLOB, CAPABILITIES BLOB, PRIMARY KEY(NetID));");
 
     }
     // Wifi Scan receiver

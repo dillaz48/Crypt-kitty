@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 public class Attack_Page extends Network_List {
 
+
     protected void onCreate(Bundle SavedIS){
 
         super.onCreate(SavedIS);
@@ -27,12 +28,11 @@ public class Attack_Page extends Network_List {
         TextView CAPview = (TextView) findViewById(R.id.CAPView);
         Button backButton = (Button) findViewById(R.id.backbutton);
 
-        Cursor SSIDselect = netDataBase.rawQuery("SELECT SSID from netDataTable", null);
-        if(SSIDselect.toString().equals(mainSSID)){
+        Cursor IDselect = netDataBase.rawQuery("SELECT * from netDataTable", null);
 
-            SSIDview.setText(SSIDselect.toString());
 
-        }
+
+
 
         backButton.setOnClickListener(new View.OnClickListener(){
 
