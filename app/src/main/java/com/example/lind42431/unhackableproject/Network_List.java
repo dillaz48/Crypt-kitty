@@ -1,6 +1,6 @@
 package com.example.lind42431.unhackableproject;
 /**
- * Version 0.62
+ * Version 0.68
  * TeamWeeV
  * Network scanner and analyzer
  */
@@ -28,6 +28,7 @@ import android.content.Intent;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.jar.Manifest;
 
 import android.database.sqlite.*;
@@ -50,10 +51,45 @@ public class Network_List extends AppCompatActivity {
     String netid;
     //String searchNetwork;
     //String ssid;
-    String mainCAP;
-    String mainSSID;
-    String mainBSSID;
+    private String mainCAP;
+    private String mainSSID;
+    private String mainBSSID;
     SQLiteDatabase netDataBase;
+
+    public void setMainSSID(String newMainSSID){
+
+        mainSSID = newMainSSID;
+
+    }
+
+    public void setMainBSSID(String newMainBSSID){
+
+        mainBSSID = newMainBSSID;
+
+    }
+
+    public void setMainCAP(String newMainCAP){
+
+        mainCAP = newMainCAP;
+
+    }
+
+    public String getMainSSID(){
+
+        return mainSSID;
+
+    }
+    public String getMainBSSID(){
+
+        return mainBSSID;
+
+    }
+    public String getMainCAP(){
+
+        return mainCAP;
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,11 +145,17 @@ public class Network_List extends AppCompatActivity {
                 mainSSID = grabItemInfo.substring(0,(grabItemInfo.indexOf('#')));
                 mainCAP = grabItemInfo.substring(grabItemInfo.lastIndexOf('#')+1, grabItemInfo.length());
 
+                setMainSSID(mainSSID);
+                setMainBSSID(mainBSSID);
+                setMainCAP(mainCAP);
+
                 ContentValues dbv = new ContentValues();
 
-                dbv.put("SSID", mainSSID);
-                dbv.put("BSSID", mainBSSID);
-                dbv.put("CAPABILITIES", mainCAP);
+                dbv.put("SSID", getMainSSID());
+                dbv.put("BSSID", getMainBSSID());
+                dbv.put("CAPABILITIES", getMainCAP());
+
+
 
 
                 netDataBase.insert("netDataTable", "NULL", dbv);
