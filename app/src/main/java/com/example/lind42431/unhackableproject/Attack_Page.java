@@ -30,11 +30,16 @@ public class Attack_Page extends Network_List {
         TextView BSSIDview = (TextView) findViewById(R.id.BSSIDView);
         TextView CAPview = (TextView) findViewById(R.id.CAPView);
         Button backButton = (Button) findViewById(R.id.backbutton);
+        Intent intent = getIntent();
 
-        Cursor IDselect = netDataBase.rawQuery("SELECT SSID FROM netDataTable WHERE SSID = "+getMainSSID()+"", wifis);
+        String MainSSIDP = intent.getStringExtra("EXTRA_SSID");
+        String MainBSSIDP = intent.getStringExtra("EXTRA_BSSID");
+        String MainCAPP = intent.getStringExtra("EXTRA_CAP");
+        
 
-        SSIDview.setText(IDselect.toString());
-
+        SSIDview.setText(MainSSIDP);
+        BSSIDview.setText(MainBSSIDP);
+        CAPview.setText(MainCAPP);
 
         backButton.setOnClickListener(new View.OnClickListener(){
 

@@ -51,44 +51,10 @@ public class Network_List extends AppCompatActivity {
     String netid;
     //String searchNetwork;
     //String ssid;
-    private String mainCAP;
-    private String mainSSID;
-    private String mainBSSID;
+
     SQLiteDatabase netDataBase;
 
-    public void setMainSSID(String newMainSSID){
 
-        mainSSID = newMainSSID;
-
-    }
-
-    public void setMainBSSID(String newMainBSSID){
-
-        mainBSSID = newMainBSSID;
-
-    }
-
-    public void setMainCAP(String newMainCAP){
-
-        mainCAP = newMainCAP;
-
-    }
-
-    public String getMainSSID(){
-
-        return mainSSID;
-
-    }
-    public String getMainBSSID(){
-
-        return mainBSSID;
-
-    }
-    public String getMainCAP(){
-
-        return mainCAP;
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,31 +106,30 @@ public class Network_List extends AppCompatActivity {
 
                 String grabItemInfo = wifis[position];
 
+                Network_Info info1 = new Network_Info();
 
-                mainBSSID = grabItemInfo.substring(grabItemInfo.indexOf('#') +1, grabItemInfo.lastIndexOf('#'));
-                mainSSID = grabItemInfo.substring(0,(grabItemInfo.indexOf('#')));
-                mainCAP = grabItemInfo.substring(grabItemInfo.lastIndexOf('#')+1, grabItemInfo.length());
+                info1.setMainBSSID( grabItemInfo.substring(grabItemInfo.indexOf('#') +1, grabItemInfo.lastIndexOf('#')));
+                info1.setMainSSID( grabItemInfo.substring(0,(grabItemInfo.indexOf('#'))));
+                info1.setMainCAP( grabItemInfo.substring(grabItemInfo.lastIndexOf('#')+1, grabItemInfo.length()));
 
-                setMainSSID(mainSSID);
-                setMainBSSID(mainBSSID);
-                setMainCAP(mainCAP);
+
 
                 ContentValues dbv = new ContentValues();
 
-                dbv.put("SSID", getMainSSID());
-                dbv.put("BSSID", getMainBSSID());
-                dbv.put("CAPABILITIES", getMainCAP());
+                dbv.put("SSID", info1.getMainSSID());
+                dbv.put("BSSID", info1.getMainBSSID());
+                dbv.put("CAPABILITIES", info1.getMainCAP());
 
 
 
 
-                netDataBase.insert("netDataTable", "NULL", dbv);
-
-
-
+                netDataBase.insert("netDataTable", "null", dbv);
 
 
                 Intent intent = new Intent(getApplicationContext(), Attack_Page.class);
+                intent.putExtra("EXTRA_SSID", info1.getMainSSID());
+                intent.putExtra("EXTRA_BSSID", info1.getMainBSSID());
+                intent.putExtra("EXTRA_CAP", info1.getMainCAP());
                 startActivity(intent);
 
 
@@ -189,8 +154,8 @@ public class Network_List extends AppCompatActivity {
         // Opens the database if it is created and creates if it does not
 
         netDataBase = openOrCreateDatabase("networkBase", MODE_PRIVATE, null);
-
-        netDataBase.execSQL("CREATE TABLE IF NOT EXISTS netDataTable(NetID int NOT NULL, SSID BLOB, BSSID BLOB, CAPABILITIES BLOB, PRIMARY KEY(NetID));");
+        //netDataBase.execSQL("DROP TABLE netDataTable");
+        netDataBase.execSQL("CREATE TABLE IF NOT EXISTS netDataTable(NetID int, SSID BLOB, BSSID BLOB, CAPABILITIES BLOB, PRIMARY KEY(NetID));");
 
     }
     // Wifi Scan receiver
