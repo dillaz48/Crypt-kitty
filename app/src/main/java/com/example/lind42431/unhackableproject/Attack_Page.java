@@ -30,12 +30,13 @@ public class Attack_Page extends Network_List {
         TextView BSSIDview = (TextView) findViewById(R.id.BSSIDView);
         TextView CAPview = (TextView) findViewById(R.id.CAPView);
         Button backButton = (Button) findViewById(R.id.backbutton);
+        Button attackButton = (Button) findViewById(R.id.attackbutton);
         Intent intent = getIntent();
 
-        String MainSSIDP = intent.getStringExtra("EXTRA_SSID");
-        String MainBSSIDP = intent.getStringExtra("EXTRA_BSSID");
-        String MainCAPP = intent.getStringExtra("EXTRA_CAP");
-        
+        final String MainSSIDP = intent.getStringExtra("EXTRA_SSID");
+        final String MainBSSIDP = intent.getStringExtra("EXTRA_BSSID");
+        final String MainCAPP = intent.getStringExtra("EXTRA_CAP");
+
 
         SSIDview.setText(MainSSIDP);
         BSSIDview.setText(MainBSSIDP);
@@ -47,6 +48,21 @@ public class Attack_Page extends Network_List {
 
                 Intent bintent = new Intent(getApplicationContext(), Network_List.class);
                 startActivity(bintent);
+
+            }
+
+
+        });
+
+        attackButton.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View v){
+
+                Intent attackIntent = new Intent(getApplicationContext(), Evil_Twin.class);
+                attackIntent.putExtra("Extra_SSID2", MainSSIDP);
+                attackIntent.putExtra("Extra_BSSID2", MainBSSIDP);
+                attackIntent.putExtra("Extra_CAP2", MainCAPP);
+                startActivity(attackIntent);
 
             }
 
