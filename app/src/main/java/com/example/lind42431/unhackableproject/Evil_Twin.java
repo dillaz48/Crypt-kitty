@@ -23,7 +23,7 @@ public class Evil_Twin extends Attack_Page {
         Intent attackIntent = getIntent();
         final String MainSSIDP2 = attackIntent.getStringExtra("Extra_SSID2");
         final String MainBSSIDP2 = attackIntent.getStringExtra("Extra_BSSID2");
-        final String MainCAPP2 = attackIntent.getStringExtra("Extra_CAP2");
+
 
 
         TextView SSIDAView = (TextView) findViewById(R.id.SSIDAView);

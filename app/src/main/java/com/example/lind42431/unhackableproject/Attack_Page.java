@@ -61,7 +61,6 @@ public class Attack_Page extends Network_List {
                 Intent attackIntent = new Intent(getApplicationContext(), Evil_Twin.class);
                 attackIntent.putExtra("Extra_SSID2", MainSSIDP);
                 attackIntent.putExtra("Extra_BSSID2", MainBSSIDP);
-                attackIntent.putExtra("Extra_CAP2", MainCAPP);
                 startActivity(attackIntent);
 
             }

@@ -75,7 +75,7 @@ public class Network_List extends AppCompatActivity {
 
         checkDBExist();
         Button networkButton = (Button) findViewById(R.id.searchButton);
-        Button selectButton = (Button) findViewById(R.id.buttonSelect);
+        Button savedButton = (Button) findViewById(R.id.buttonSaved);
         Button scanButton = (Button) findViewById(R.id.buttonScan);//Scan Button
 
         wifiM = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -137,7 +137,17 @@ public class Network_List extends AppCompatActivity {
             }
         });
 
+        savedButton.setOnClickListener(new View.OnClickListener(){
 
+            public void onClick(View v){
+
+                Intent sNetworks = new Intent(getApplicationContext(), Saved_Networks.class);
+                startActivity(sNetworks);
+
+            }
+
+
+        });
 
     }
 

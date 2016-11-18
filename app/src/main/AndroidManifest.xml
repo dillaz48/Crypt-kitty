@@ -32,7 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Evil_Twin"></activity>
+        <activity android:name=".Evil_Twin" />
+        <activity android:name=".Saved_Networks"></activity>
     </application>
 
 </manifest>
