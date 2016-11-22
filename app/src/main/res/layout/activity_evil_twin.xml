@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="SSID:"
+        android:textColor="@color/greenText"
         android:textSize="18pt"
         android:id="@+id/textView" />
 
@@ -24,12 +25,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:background="@color/darkgreenText"
         android:text="On"
         android:id="@+id/apOn" />
 
     <Button
         android:layout_width="80dp"
         android:layout_height="50dp"
+        android:background="@color/darkgreenText"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -40,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/SSIDAView"
+        android:textColor="@color/greenText"
         android:textSize="15pt"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
@@ -49,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="BSSID:"
+        android:textColor="@color/greenText"
         android:textSize="20pt"
         android:layout_below="@+id/SSIDAView"
         android:layout_alignParentLeft="true"
@@ -59,6 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/BSSIDAView"
+        android:textColor="@color/greenText"
         android:textSize="15pt"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"

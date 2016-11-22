@@ -10,29 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.lind42431.unhackableproject.Network_List">
 
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:hint="Search (Network Name)"
-        android:id="@+id/networkEditText"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/searchButton"
-        android:text="Search"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="330dp"
         android:id="@+id/networkList"
-        android:layout_below="@+id/searchButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/buttonSelect" />
+        android:layout_above="@+id/buttonSaved"
+        android:layout_alignParentTop="true" />
 
 
     <Button
@@ -40,6 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonSaved"
         android:text="saved"
+        android:background="@color/darkgreenText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true" />
@@ -49,6 +36,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonScan"
         android:text="Scan"
+        android:background="@color/darkgreenText"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

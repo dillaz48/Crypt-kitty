@@ -10,6 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:textColor="@color/greenText"
         android:id="@+id/SSIDHead" />
 
     <TextView
@@ -18,11 +19,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/SSIDView"
         android:layout_below="@+id/SSIDHead"
+        android:textColor="@color/greenText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:text="BSSID:"
+        android:textColor="@color/greenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/BSSIDHead"
@@ -32,6 +35,7 @@
 
     <TextView
         android:text="TextView"
+        android:textColor="@color/greenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/BSSIDView"
@@ -43,6 +47,7 @@
 
     <TextView
         android:text="Security Capability:"
+        android:textColor="@color/greenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/CAPHead"
@@ -52,6 +57,7 @@
 
     <TextView
         android:text="TextView"
+        android:textColor="@color/greenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/CAPView"
@@ -68,6 +74,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:background="@color/darkgreenText"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp" />
 
@@ -80,6 +87,7 @@
         android:layout_marginEnd="15dp"
         android:layout_alignBaseline="@+id/backbutton"
         android:layout_alignBottom="@+id/backbutton"
+        android:background="@color/darkgreenText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>

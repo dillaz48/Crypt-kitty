@@ -56,6 +56,7 @@ public class Network_List extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +75,7 @@ public class Network_List extends AppCompatActivity {
         final Toast noOutput = Toast.makeText(getApplicationContext(), "Did not output data", Toast.LENGTH_SHORT);
 
         checkDBExist();
-        Button networkButton = (Button) findViewById(R.id.searchButton);
+
         Button savedButton = (Button) findViewById(R.id.buttonSaved);
         Button scanButton = (Button) findViewById(R.id.buttonScan);//Scan Button
 
@@ -91,14 +92,7 @@ public class Network_List extends AppCompatActivity {
             }
 
         });
-        networkButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
 
-
-
-            }
-
-        });
 
         networklist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -123,7 +117,7 @@ public class Network_List extends AppCompatActivity {
 
 
 
-                netDataBase.insert("netDataTable", "null", dbv);
+                netDataBase.insert("netDataTable", null, dbv);
 
 
                 Intent intent = new Intent(getApplicationContext(), Attack_Page.class);
