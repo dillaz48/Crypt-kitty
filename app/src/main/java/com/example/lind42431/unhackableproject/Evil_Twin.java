@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +38,7 @@ public class Evil_Twin extends Attack_Page {
         } else {
             OnButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+                    WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
 
                     if (wifiManager.isWifiEnabled()) {
                         wifiManager.setWifiEnabled(false);
@@ -58,7 +57,7 @@ public class Evil_Twin extends Attack_Page {
                     netConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
                     netConfig.SSID = MainSSIDP2;
                     netConfig.BSSID = MainBSSIDP2;
-//                    netConfig.preSharedKey = "defaultPassword";
+//                  netConfig.preSharedKey = "defaultPassword";
 
 
                     try {
@@ -69,7 +68,7 @@ public class Evil_Twin extends Attack_Page {
                         Method isWifiApEnabledmethod = wifiManager.getClass().getMethod("isWifiApEnabled");
                         while (!(Boolean) isWifiApEnabledmethod.invoke(wifiManager)) {
                         }
-                        ;
+
 
                         Method getWifiApStateMethod = wifiManager.getClass().getMethod("getWifiApState");
                         int apstate = (Integer) getWifiApStateMethod.invoke(wifiManager);
@@ -91,8 +90,8 @@ public class Evil_Twin extends Attack_Page {
 
             OffButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-                    WifiConfiguration netConfig = new WifiConfiguration();
+                    WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                    WifiConfiguration netConfig;
                     netConfig = null;
 
                     if (!(wifiManager.isWifiEnabled())) {

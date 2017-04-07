@@ -1,14 +1,12 @@
 package com.example.lind42431.unhackableproject;
 /**
- * Version 0.68
+ * Version 0.9
  * TeamWeeV
  * Network scanner and analyzer
  */
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.net.wifi.WifiInfo;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,24 +16,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
-import java.util.jar.Manifest;
-
-import android.database.sqlite.*;
 
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-
 
 import android.widget.Toast;
 
@@ -49,12 +40,6 @@ public class Network_List extends AppCompatActivity {
     ListView networklist;
     String wifis[];
     String netid;
-    //String searchNetwork;
-    //String ssid;
-
-    SQLiteDatabase netDataBase;
-
-
 
 
     @Override
@@ -70,16 +55,13 @@ public class Network_List extends AppCompatActivity {
         }
 
 
-        //final EditText searchNet = (EditText) findViewById(R.id.networkEditText);
         networklist = (ListView) findViewById(R.id.networkList);
         final Toast noOutput = Toast.makeText(getApplicationContext(), "Did not output data", Toast.LENGTH_SHORT);
-
-        checkDBExist();
 
         Button savedButton = (Button) findViewById(R.id.buttonSaved);
         Button scanButton = (Button) findViewById(R.id.buttonScan);//Scan Button
 
-        wifiM = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiM = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiI = wifiM.getConnectionInfo();
         wifiR = new WifiScanReciever();
         scanButton.setOnClickListener(new View.OnClickListener(){
@@ -115,18 +97,11 @@ public class Network_List extends AppCompatActivity {
                 dbv.put("CAPABILITIES", info1.getMainCAP());
 
 
-
-
-                netDataBase.insert("netDataTable", null, dbv);
-
-
                 Intent intent = new Intent(getApplicationContext(), Attack_Page.class);
                 intent.putExtra("EXTRA_SSID", info1.getMainSSID());
                 intent.putExtra("EXTRA_BSSID", info1.getMainBSSID());
                 intent.putExtra("EXTRA_CAP", info1.getMainCAP());
                 startActivity(intent);
-
-
 
             }
         });
@@ -154,14 +129,7 @@ public class Network_List extends AppCompatActivity {
         super.onResume();
     }
 
-    private void checkDBExist(){
-        // Opens the database if it is created and creates if it does not
 
-        netDataBase = openOrCreateDatabase("networkBase", MODE_PRIVATE, null);
-        //netDataBase.execSQL("DROP TABLE netDataTable");
-        netDataBase.execSQL("CREATE TABLE IF NOT EXISTS netDataTable(NetID int, SSID BLOB, BSSID BLOB, CAPABILITIES BLOB, PRIMARY KEY(NetID));");
-
-    }
     // Wifi Scan receiver
     public class WifiScanReciever extends BroadcastReceiver{
 
